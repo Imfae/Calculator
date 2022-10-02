@@ -1,0 +1,35 @@
+body{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 270px;
+    margin: auto;
+}
+
+.display{
+    height: 100px;
+    width: 270px;
+    background-color: rgb(141, 163, 173);
+    border: solid gray;
+}
+
+button{
+    height: 60px;
+    width: 60px;
+    border-radius: 5px;
+}
+
+.digit{
+    background-color: rgb(197, 234, 255);
+}
+
+.top-row{
+    height: 30px;
+}
