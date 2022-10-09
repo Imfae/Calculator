@@ -14,6 +14,9 @@ body{
 }
 
 .display{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
     height: 100px;
     width: 270px;
     background-color: rgb(141, 163, 173);
