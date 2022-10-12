@@ -4,13 +4,17 @@ body{
 }
 
 .container{
+    background-color: rgb(59, 59, 59);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
     width: 270px;
-    margin: auto;
+    margin: 50px auto;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 4px 4px rgb(19, 19, 19);
 }
 
 .display{
@@ -19,14 +23,16 @@ body{
     justify-content: flex-end;
     height: 100px;
     width: 270px;
+    font-size: 20px;
     background-color: rgb(141, 163, 173);
-    border: solid gray;
+    border: solid rgb(212, 212, 212);
 }
 
 button{
     height: 60px;
     width: 60px;
     border-radius: 5px;
+    box-shadow: 2px 2px gray;
 }
 
 .digit{
