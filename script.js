@@ -32,40 +32,48 @@ const operate = function (operator, a, b) {
 
 }
 
-const display = document.querySelector(".display");
+
 let a = [];
 let operator = "";
 let isEqual = false;
 let result = 0;
 let content = "";
-let decimal = document.querySelector("#decimal");
 let decimalPressed = false;
 
+//User-calculator interaction algorithm
 const displayValue = function () {
     
     //If a button with className "digit" is pressed
     if (this.className === "digit"){
+
+        //Clear screen if an equality sign is pressed before
         if (isEqual){
             display.textContent = "";
             isEqual = false;
-            
         }
-        display.textContent += this.textContent;
+        //Lock decimal button once pressed
         if (this.textContent === "."){
             decimal.setAttribute('style', 'pointer-events: none');
             decimalPressed = true;
         }
+        display.textContent += this.textContent;
     }
 
     //If a button with className "operator" is pressed
     if (this.className === "operator"){
         decimalPressed = false;
         a.push(Number(display.textContent));
+
+        //If divided by 0
         if (a[1] === 0 && operator === "/"){
             display.textContent = "";
             display.textContent = "You should have known better...";
+            a = [];
+            isEqual = true;
         }
         else{
+
+            //Calculate previous pair of numbers with operator
             if(a.length > 1){
                 result = operate(operator, a[0], a[1]);
                 display.textContent = result;
@@ -73,7 +81,6 @@ const displayValue = function () {
                 a.push(result);
                 isEqual = true;
                 operator = this.textContent;
-                
             }
             else{
                 isEqual = false;
@@ -91,17 +98,21 @@ const displayValue = function () {
         decimalPressed = false;
         a.push(Number(display.textContent));
         console.log(`Equal ${a[0]} ${a[1]} ${a[2]}`);
+
         if (a[1] === 0 && operator === "/"){
             display.textContent = "";
             display.textContent = "You should have known better...";
         }
+        else if (a[1] === 0){
+            display.textContent = a[1];
+            
+        }
         else{
             result = operate(operator, a[0], a[1]);
-            display.textContent = `${result}`;
-            a = [];
-            isEqual = true;    
+            display.textContent = `${result}`; 
         }
-        
+        a = []; 
+        isEqual = true;
     }
 
     //If the cancel button is pressed
@@ -118,6 +129,19 @@ const displayValue = function () {
         display.textContent = content;
     }
 
+    //If the percent sign is pressed
+    if (this.textContent === "%"){
+        content = display.textContent;
+        display.textContent = content /100;
+    }
+
+    //If the negative sign is pressed
+    if (this.textContent === "+/-"){
+        content = display.textContent;
+        display.textContent = "-" + content;
+    }
+
+    //Unlock decimal button
     if (decimalPressed === false){
         decimal.removeAttribute("style", "pointer-events: none");
     }
@@ -127,24 +151,50 @@ const buttons = document.querySelectorAll("button");
 const equal = document.querySelector(".equal");
 const cancel = document.querySelector("#cancel");
 const backspace = document.querySelector("#backspace");
-equal.addEventListener("click", displayValue);
+const display = document.querySelector(".display");
+const decimal = document.querySelector("#decimal");
+
+//Keyboard support for calculator
 document.addEventListener('keydown', (event) => {
 	buttons.forEach((button)=>{
         if (event.key === button.textContent){
             console.log('button '+ button.className);
             button.click();
+            button.setAttribute("style", "background-color: rgb(58, 58, 58); color: white");
         }
     })
     if (event.key === "Enter"){
         equal.click();
+        equal.setAttribute("style", "background-color: rgb(58, 58, 58); color: white");
     }
     if (event.key === "Backspace"){
         backspace.click();
+        backspace.setAttribute("style", "background-color: rgb(58, 58, 58); color: white");
     }
     if (event.key === "Escape"){
         cancel.click();
+        cancel.setAttribute("style", "background-color: rgb(58, 58, 58); color: white");
     }
 });
+
+document.addEventListener('keyup', (event) => {
+	buttons.forEach((button)=>{
+        if (event.key === button.textContent){
+            button.removeAttribute("style", "background-color: rgb(58, 58, 58); color: white");
+        }
+    })
+    if (event.key === "Enter"){
+        equal.removeAttribute("style", "background-color: rgb(58, 58, 58); color: white");
+    }
+    if (event.key === "Backspace"){
+        backspace.removeAttribute("style", "background-color: rgb(58, 58, 58); color: white");
+    }
+    if (event.key === "Escape"){
+        cancel.removeAttribute("style", "background-color: rgb(58, 58, 58); color: white");
+    }
+});
+
+//Mouse interaction for calculator
 buttons.forEach((button)=>{
     button.addEventListener("click", displayValue);
 });
